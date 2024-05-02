@@ -56,16 +56,21 @@ const convertTime = (date) => {
 const mapJob = (jobs) => {
   console.log(jobs);
   return jobs.map((b) => {
+    console.log(b.employer_logo);
     const date = new Date(b.job_posted_at_datetime_utc);
     const Day_posted = convertTime(date);
     return `  <div class="job-listing" id= ${b.id}>  <h3>${b.job_title}</h3>
-          <p>Company: <span class="company-name">${b.employer_name}</span></p>
+          <p><strong class="">Company:</strong> <span class="company-name">${b.employer_name}</span></p>
           <p><img class="company-log" alt= "Company Logo" src= ${b.employer_logo}>
-          <p>Day Posted: <span class="company-name">${Day_posted} Days</span></p>
-          <p>Location: <span class="job-location">${b.job_country}, ${b.job_city}    </span></p>
-          <p>Job Type: <span class="job-type">${b.job_employment_type}</span></p>
-          <p>Description: <span class="description">${b.job_description}
-          </span></p>
+          <p><strong class="">Day Posted:</strong> <span class="company-name">${Day_posted} Days</span></p>
+          <p><strong class="">Location:</strong> <span class="job-location">${b.job_country}, ${b.job_city}    </span></p>
+          <p><strong class="">Job Type:</strong> <span class="job-type">${b.job_employment_type}</span></p>
+          <p><strong class="">Description: </strong>
+          </p>
+          <div class="arrange">
+          <p class="description">${b.job_description}
+          
+          </p>
          <div class="apply-cont">
          <a href="${b.job_apply_link}" target="_blank">
          
@@ -75,6 +80,7 @@ const mapJob = (jobs) => {
           
           </div>
           </div>
+          </div>
           `;
   });
 };
@@ -82,13 +88,12 @@ const mapJob = (jobs) => {
 function saveDataToLocal(data) {
   try {
     localStorage.setItem("apiData", JSON.stringify(data));
-    console.log("Data saved to local storage.");
   } catch (error) {
     console.error("Error saving data to local storage:", error);
   }
 }
 
-console.log("working");
+
 
 const FilterJob = (arr) => {
   console.log(arr);
@@ -120,35 +125,34 @@ const getJobs = async (url) => {
     const result = await response.json();
     saveDataToLocal(result.data);
     FilterJob(result.data);
-    // console.log(result.data);
+
     return result.data;
   } catch (error) {
     const savedData = getDataFromLocal();
     if (savedData) {
       console.log("From local Storage");
       return savedData;
-      // return savedData;
+
     } else {
       console.error(
         "Failed to fetch data from API and no local data available."
       );
-      jobListing.innerHTML =
-        "Failed to fetch data from API and no local data available.";
+    
       return null;
     }
   }
 };
-// getJobs()
+
 
 const display = async (url) => {
   const jobbing = await getJobs(url);
-  console.log(jobbing);
+
   FilterJob(jobbing);
-  //  console.log(jobbing);
+
 };
 
 display();
-//
+
 
 window.addEventListener("scroll", () => {
   if (window.scrollY > 100) {

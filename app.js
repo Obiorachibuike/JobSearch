@@ -1,5 +1,4 @@
-// import data from "./db"
-
+// This section defines variables to select various elements from the HTML document
 const jobTitle = document.querySelector(".job-title");
 const filterBtn = document.querySelectorAll(".filter");
 const jobListing = document.querySelector(".job-listings");
@@ -13,8 +12,7 @@ const searchLocation = document.querySelector(".search-location");
 const searchBtn = document.querySelector(".search-btn");
 const content = document.querySelectorAll("[data-translate]");
 
-
-
+// Function to retrieve data from local storage
 function getDataFromLocal() {
   try {
     const data = localStorage.getItem("apiData");
@@ -30,19 +28,16 @@ function getDataFromLocal() {
   }
 }
 
+// Function to convert time difference to human-readable format
 const convertTime = (date) => {
   // date = new Date(date)
   const currentTime = new Date().getTime();
-
   const specifiedTime = date.getTime();
-
   const timeDifference = currentTime - specifiedTime;
-
   let secondsDifference = timeDifference / 1000;
   if (secondsDifference > 60) {
     secondsDifference /= 60;
   }
-
   if (secondsDifference > 60) {
     secondsDifference /= 60;
   }
@@ -53,6 +48,7 @@ const convertTime = (date) => {
   return Math.round(secondsDifference);
 };
 
+// Function to map job data into HTML elements
 const mapJob = (jobs) => {
   console.log(jobs);
   return jobs.map((b) => {
@@ -69,15 +65,11 @@ const mapJob = (jobs) => {
           </p>
           <div class="arrange">
           <p class="description">${b.job_description}
-          
           </p>
          <div class="apply-cont">
          <a href="${b.job_apply_link}" target="_blank">
-         
          <button class="apply">Apply</button>
          </a>
-          
-          
           </div>
           </div>
           </div>
@@ -85,6 +77,7 @@ const mapJob = (jobs) => {
   });
 };
 
+// Function to save data to local storage
 function saveDataToLocal(data) {
   try {
     localStorage.setItem("apiData", JSON.stringify(data));
@@ -93,8 +86,7 @@ function saveDataToLocal(data) {
   }
 }
 
-
-
+// Function to filter jobs based on job type
 const FilterJob = (arr) => {
   console.log(arr);
   displayJob = mapJob(arr);
@@ -110,7 +102,10 @@ const FilterJob = (arr) => {
   });
 };
 
+// URL to fetch job data
 let url = "https://jsearch.p.rapidapi.com/search?query=Web Developer";
+
+// Function to fetch job data from API
 const getJobs = async (url) => {
   const options = {
     method: "GET",
@@ -125,46 +120,42 @@ const getJobs = async (url) => {
     const result = await response.json();
     saveDataToLocal(result.data);
     FilterJob(result.data);
-
     return result.data;
   } catch (error) {
     const savedData = getDataFromLocal();
     if (savedData) {
       console.log("From local Storage");
       return savedData;
-
     } else {
       console.error(
         "Failed to fetch data from API and no local data available."
       );
-    
       return null;
     }
   }
 };
 
-
+// Function to display jobs
 const display = async (url) => {
   const jobbing = await getJobs(url);
-
   FilterJob(jobbing);
-
 };
 
+// Initial display of jobs
 display();
 
-
+// Event listener for scrolling to toggle header class
 window.addEventListener("scroll", () => {
   if (window.scrollY > 100) {
     header.classList.remove("header");
     header.classList.add("float");
-    // alert(window.scrollY)
   } else {
     header.classList.remove("float");
     header.classList.add("header");
   }
 });
 
+// Event listener to toggle login, language select, and navigation content
 cancel.addEventListener("click", () => {
   login.classList.toggle("show");
   langSelect.classList.toggle("show");
@@ -172,29 +163,27 @@ cancel.addEventListener("click", () => {
   hambuger.classList.toggle("add");
 });
 
-// Function to retrieve data from local storage
-
+// Event listener for search button to fetch jobs based on search input
 searchBtn.addEventListener("click", async () => {
-  searchInputValue = searchInput.value;
- 
+ let  searchInputValue = searchInput.value;
   let url = `https://jsearch.p.rapidapi.com/search?query=${searchInputValue}`;
-
-display(url);
+  display(url);
 });
- handleKeyPress = (event) => {
+
+// Function to handle search on pressing Enter key
+handleKeyPress = (event) => {
   if (event.key === 'Enter') {
       event.preventDefault(); 
       searchInputValue = searchInput.value;
- 
       let url = `https://jsearch.p.rapidapi.com/search?query=${searchInputValue}`;
-    
-    display(url);
+      display(url);
   }
 }
 
+// Event listener for Enter key press in search input
 searchInput.addEventListener('keypress', handleKeyPress);
 
-
+// Event listener to toggle login, language select, and navigation content
 hambuger.addEventListener("click", () => {
   login.classList.toggle("show");
   langSelect.classList.toggle("show");
@@ -202,6 +191,7 @@ hambuger.addEventListener("click", () => {
   hambuger.classList.toggle("add");
 });
 
+// Functionality for carousel slider
 let slideIndex = 1;
 
 const next = () => {
@@ -211,6 +201,7 @@ const next = () => {
   }
   showSlide(slideIndex);
 };
+
 const prev = () => {
   slideIndex--;
   if (slideIndex < 1) {
@@ -219,6 +210,7 @@ const prev = () => {
   showSlide(slideIndex);
 };
 
+// Event listener for next and previous buttons
 document.querySelector(".next").addEventListener("click", () => {
   next();
 });
@@ -227,10 +219,12 @@ document.querySelector(".prev").addEventListener("click", () => {
   prev();
 });
 
+// Auto slideshow
 setInterval(() => {
   next();
 }, 5000);
 
+// Function to display current slide
 function showSlide(n) {
   document.querySelectorAll(".slide").forEach((slide) => {
     slide.style.display = "none";

@@ -1,9 +1,25 @@
-README.txt
 
 Project: Job Search
 
 Description:
-Job Search is a web application designed to simplify the job hunting process by aggregating job listings from various top job websites. Users can search for job opportunities based on specific criteria, eliminating the need to visit multiple websites individually.
+
+JobSearch is a web application designed to assist job seekers in finding employment opportunities. It provides a user-friendly interface for searching, filtering, and applying for jobs across various platforms.
+
+Instructions for Running the Code Locally:
+
+    Clone the repository from GitHub: git clone https://github.com/your_username/JobSearch.git
+    Navigate to the project directory: cd JobSearch
+    Open the index.html file in a web browser to launch the application.
+
+Dependencies:
+This project requires the following dependencies:
+
+    Axios: A promise-based HTTP client for making requests to APIs.
+
+Description of APIs Used:
+This project integrates with the following API:
+
+    JSearch API (RapidAPI): Provides access to a vast database of job listings. It offers endpoints for searching and retrieving job listings based on various criteria such as keywords, location, and job type.       
 
 API Usage:
 To fetch job listings, the application utilizes the following API endpoint:
@@ -24,7 +40,7 @@ Technologies Used:
 - JavaScript: Programming language for adding interactivity and dynamic functionality.
 
 Usage and Documentation:
-1. Open the Fresh Jobs Search website in a web browser.
+1. Open the  Job Search website in a web browser.
 2. Enter the desired job title or keywords in the search input field.
 3. Click the "Search" button to initiate the job search.
 4. The website will retrieve job listings from top job websites based on the search criteria.

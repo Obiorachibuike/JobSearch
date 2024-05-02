@@ -142,7 +142,7 @@ const display = async (url) => {
 };
 
 // Initial display of jobs
-display();
+display(url);
 
 // Event listener for scrolling to toggle header class
 window.addEventListener("scroll", () => {

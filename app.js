@@ -147,7 +147,7 @@ const display = async (url) => {
   //  console.log(jobbing);
 };
 
-display();
+display(url);
 //
 
 window.addEventListener("scroll", () => {
